@@ -20,7 +20,10 @@ class ExtendedLogger extends Logger {
 
   ExtendedLogger(
       {LogPrinter? localLogPrinter, AdditionalLogConfig? additionalConfig})
-      : _localLogger = Logger(printer: localLogPrinter);
+      : _localLogger = Logger(
+          printer: localLogPrinter,
+          filter: ProductionFilter(),
+        );
 
   @override
   void log(Level level, message,
