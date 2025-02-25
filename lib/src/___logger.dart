@@ -30,7 +30,7 @@ class ExtendedLogger extends Logger {
     stackTrace ??= currentTrace;
     stackTrace = stackTrace == StackTrace.empty
         ? stackTrace
-        : Trace.from(stackTrace).terse.skipLogLines();
+        : Trace.from(stackTrace).terse.skipLoggerLines();
     final metadata = additionalConfig?.getMetadata?.call();
     message = [
       if (currentLine != null) 'at $currentLine',
@@ -102,12 +102,12 @@ class ExtendedLogger extends Logger {
 extension on Trace {
   String? logLine() {
     final str = PrettyPrinter().formatStackTrace(this, null);
-    return str?.split('\n').firstWhere((e) => !e.contains('logger.dart'));
+    return str?.split('\n').firstWhere((e) => !e.contains('___logger.dart'));
   }
 
-  Trace skipLogLines() {
+  Trace skipLoggerLines() {
     final i =
-        frames.lastIndexWhere((e) => e.toString().contains('logger.dart'));
+        frames.lastIndexWhere((e) => e.toString().contains('___logger.dart'));
     return Trace(frames.skip(i + 1));
   }
 }
