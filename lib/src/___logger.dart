@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:logger/logger.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import 'model.dart';
+import 'config.dart';
 
 class ExtendedLogger extends Logger {
   static final iosOptimizedLocalLogPrinter = PrefixPrinter(
