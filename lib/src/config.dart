@@ -1,19 +1,17 @@
 import 'dart:async';
 
-import 'package:logger/logger.dart';
+import 'log_level.dart';
 
 typedef LogRemotely = FutureOr<void> Function(
-  Level level,
-
-  /// message also contains any metadata.
+  LogLevel level,
   String message,
   Object? error,
   StackTrace? stackTrace,
 );
 
 class AdditionalLogConfig {
-  final bool Function(Level level)? shouldLogLocally;
-  final bool Function(Level level)? shouldLogRemotely;
+  final bool Function(LogLevel level)? shouldLogLocally;
+  final bool Function(LogLevel level)? shouldLogRemotely;
   final LogRemotely? logRemotely;
 
   /// The metadata is included in the log message.

@@ -1,33 +1,27 @@
-import 'dart:developer' as d;
 import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'config.dart';
+import 'log_level.dart';
 
-class ExtendedLogger extends Logger {
-  static final iosOptimizedLocalLogPrinter = PrefixPrinter(
-    PrettyPrinter(
-      errorMethodCount: 100,
-      // colors aren't working on ios, https://github.com/SourceHorizon/logger?tab=readme-ov-file#colors
-      colors: false,
-    ),
-  );
+typedef LogLocally = Function(
+  LogLevel level,
+  String message,
+  Object? error,
+  StackTrace? stackTrace,
+);
 
-  final Logger _localLogger;
+class ExtendedLogger {
+  final LogLocally logLocally;
   AdditionalLogConfig? additionalConfig;
 
   ExtendedLogger(
-      {LogPrinter? localLogPrinter, AdditionalLogConfig? additionalConfig})
-      : _localLogger = Logger(
-          printer: localLogPrinter,
-          filter: ProductionFilter(),
-        );
+      {required this.logLocally, AdditionalLogConfig? additionalConfig});
 
-  @override
-  void log(Level level, message,
-      {DateTime? time, Object? error, StackTrace? stackTrace}) async {
+  void log(LogLevel level, String message,
+      {Object? error, StackTrace? stackTrace}) {
     final currentTrace = Trace.current();
     final currentLine = currentTrace.logLine();
     stackTrace ??= currentTrace;
@@ -42,41 +36,33 @@ class ExtendedLogger extends Logger {
       message.toString(),
     ].join('\n');
     if (additionalConfig?.shouldLogLocally?.call(level) ?? true) {
-      _logLocally(level, message, error, stackTrace);
+      logLocally(level, message, error, stackTrace);
     }
     if (additionalConfig?.shouldLogRemotely?.call(level) ?? false) {
       _logRemotely(level, message, error, stackTrace);
     }
   }
 
-  void _logLocally(
-      Level level, String message, Object? error, StackTrace stackTrace) {
-    if (message.length > 1000) {
-      d.log(
-        '***\n$message\n***',
-        level: level.value,
-        error: error,
-        stackTrace: stackTrace == StackTrace.empty ? null : stackTrace,
-      );
-    } else {
-      _localLogger.log(
-        level,
-        message,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-  }
-
-  Future<void> _logRemotely(
-      Level level, String message, Object? error, StackTrace stackTrace) async {
+  Future<void> _logRemotely(LogLevel level, String message, Object? error,
+      StackTrace stackTrace) async {
     try {
       await additionalConfig?.logRemotely
           ?.call(level, message, error, stackTrace);
     } catch (e, s) {
-      _localLogger.w('Failed to log remotely', error: e, stackTrace: s);
+      logLocally(LogLevel.warning, 'Failed to log remotely', e, s);
     }
   }
+
+  void v(String message, {Object? error, StackTrace? stackTrace}) =>
+      log(LogLevel.verbose, message, error: error, stackTrace: stackTrace);
+  void d(String message, {Object? error, StackTrace? stackTrace}) =>
+      log(LogLevel.debug, message, error: error, stackTrace: stackTrace);
+  void i(String message, {Object? error, StackTrace? stackTrace}) =>
+      log(LogLevel.info, message, error: error, stackTrace: stackTrace);
+  void w(String message, {Object? error, StackTrace? stackTrace}) =>
+      log(LogLevel.warning, message, error: error, stackTrace: stackTrace);
+  void e(String message, {Object? error, StackTrace? stackTrace}) =>
+      log(LogLevel.error, message, error: error, stackTrace: stackTrace);
 
   /// Use when an api call fails.
   /// If no internet connection is available then log as info.
@@ -84,12 +70,12 @@ class ExtendedLogger extends Logger {
   void eApi(String message, {Object? error, StackTrace? stackTrace}) {
     final isConnected = additionalConfig?.isConnectedToInternet?.call();
     final level = error is SocketException
-        ? Level.info
+        ? LogLevel.info
         : isConnected == null
-            ? Level.error
+            ? LogLevel.error
             : isConnected
-                ? Level.error
-                : Level.info;
+                ? LogLevel.error
+                : LogLevel.info;
     log(
       level,
       [

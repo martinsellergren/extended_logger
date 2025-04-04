@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 
 part 'google_cloud_run_utils.freezed.dart';
 part 'google_cloud_run_utils.g.dart';
@@ -53,23 +52,4 @@ enum Severity {
   critical,
   alert,
   emergency,
-}
-
-extension LogLevelSeverity on Level {
-  Severity get severity => switch (this) {
-        Level.all => Severity.debug,
-        // ignore: deprecated_member_use
-        Level.verbose => Severity.debug,
-        Level.trace => Severity.debug,
-        Level.debug => Severity.debug,
-        Level.info => Severity.info,
-        Level.warning => Severity.warning,
-        Level.error => Severity.error,
-        // ignore: deprecated_member_use
-        Level.wtf => Severity.emergency,
-        Level.fatal => Severity.emergency,
-        // ignore: deprecated_member_use
-        Level.nothing => Severity.emergency,
-        Level.off => Severity.emergency,
-      };
 }
