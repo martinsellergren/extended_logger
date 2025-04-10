@@ -1,3 +1,7 @@
+## 0.2.1
+
+ - Fix naming mistake.
+
 ## 0.2.0
 A breaking change.
 

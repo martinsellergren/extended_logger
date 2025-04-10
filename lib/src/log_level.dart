@@ -31,7 +31,7 @@ extension TalkerLogLevelX on LogLevel {
       };
 }
 
-extension Logger on LogLevel {
+extension LoggerLogLevelX on LogLevel {
   Level get asLogger => switch (this) {
         LogLevel.verbose => Level.trace,
         LogLevel.debug => Level.debug,
