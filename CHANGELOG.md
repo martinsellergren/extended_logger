@@ -1,3 +1,7 @@
+## 0.2.3
+
+- Tweak package description and readme.
+
 ## 0.2.2
 
 - Add skipLoggerLines-parameter.

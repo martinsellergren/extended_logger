@@ -1,6 +1,6 @@
 name: extended_logger
-description: Some convenient extensions on logger-package's logger.
-version: 0.2.2
+description: A logger api with some convenience stuff for better logging.
+version: 0.2.3
 repository: https://github.com/martinsellergren/extended_logger
 
 environment:
