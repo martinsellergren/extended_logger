@@ -1,3 +1,7 @@
+## 0.2.2
+
+- Add skipLoggerLines-parameter.
+
 ## 0.2.1
 
  - Fix naming mistake.
@@ -12,11 +16,11 @@ A breaking change.
 
 ## 0.1.2
 
-- Log in flutter release mode
+- Log in flutter release mode.
 
 ## 0.1.1
 
-- Improve skipping of logger lines
+- Improve skipping of logger lines.
 
 ## 0.1.0
 

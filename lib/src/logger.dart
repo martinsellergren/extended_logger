@@ -15,10 +15,16 @@ typedef LogLocally = Function(
 
 class ExtendedLogger {
   final LogLocally logLocally;
+
+  /// Skip initial logger.dart-entries in stacktraces.
+  final bool skipLoggerLines;
+
   AdditionalLogConfig? additionalConfig;
 
   ExtendedLogger(
-      {required this.logLocally, AdditionalLogConfig? additionalConfig});
+      {required this.logLocally,
+      this.skipLoggerLines = true,
+      AdditionalLogConfig? additionalConfig});
 
   void log(LogLevel level, String message,
       {Object? error, StackTrace? stackTrace}) {
@@ -26,8 +32,10 @@ class ExtendedLogger {
     final currentLine = currentTrace.logLine();
     stackTrace ??= currentTrace;
     stackTrace = stackTrace == StackTrace.empty
-        ? stackTrace
-        : Trace.from(stackTrace).terse.skipLoggerLines();
+        ? StackTrace.empty
+        : skipLoggerLines
+            ? Trace.from(stackTrace).terse.skipLoggerLines()
+            : Trace.from(stackTrace).terse;
     final metadata = additionalConfig?.getMetadata?.call();
     message = [
       if (currentLine != null) 'at $currentLine',
@@ -91,12 +99,12 @@ class ExtendedLogger {
 extension on Trace {
   String? logLine() {
     final str = PrettyPrinter().formatStackTrace(this, null);
-    return str?.split('\n').firstWhere((e) => !e.contains('___logger.dart'));
+    return str?.split('\n').firstWhere((e) => !e.contains('logger.dart'));
   }
 
   Trace skipLoggerLines() {
     final i =
-        frames.lastIndexWhere((e) => e.toString().contains('___logger.dart'));
+        frames.lastIndexWhere((e) => e.toString().contains('logger.dart'));
     return Trace(frames.skip(i + 1));
   }
 }
