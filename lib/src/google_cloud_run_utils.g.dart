@@ -6,8 +6,7 @@ part of 'google_cloud_run_utils.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CloudLogImpl _$$CloudLogImplFromJson(Map<String, dynamic> json) =>
-    _$CloudLogImpl(
+_CloudLog _$CloudLogFromJson(Map<String, dynamic> json) => _CloudLog(
       severity: $enumDecode(_$SeverityEnumMap, json['severity']),
       message: json['message'] as String,
       trace: json['logging.googleapis.com/trace'] as String?,
@@ -18,8 +17,7 @@ _$CloudLogImpl _$$CloudLogImplFromJson(Map<String, dynamic> json) =>
       stackTrace: json['stackTrace'] as String?,
     );
 
-Map<String, dynamic> _$$CloudLogImplToJson(_$CloudLogImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CloudLogToJson(_CloudLog instance) => <String, dynamic>{
       'severity': _$SeverityEnumMap[instance.severity]!,
       'message': instance.message,
       'logging.googleapis.com/trace': instance.trace,

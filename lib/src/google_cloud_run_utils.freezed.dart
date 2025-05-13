@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,11 +10,8 @@ part of 'google_cloud_run_utils.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 GoogleCloudRunLogEntry _$GoogleCloudRunLogEntryFromJson(
     Map<String, dynamic> json) {
   return _CloudLog.fromJson(json);
@@ -21,98 +19,56 @@ GoogleCloudRunLogEntry _$GoogleCloudRunLogEntryFromJson(
 
 /// @nodoc
 mixin _$GoogleCloudRunLogEntry {
-  Severity get severity => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  Severity get severity;
+  String get message;
   @JsonKey(name: 'logging.googleapis.com/trace')
-  String? get trace => throw _privateConstructorUsedError;
-  Map<String, String>? get labels => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
-  String? get stackTrace => throw _privateConstructorUsedError;
-
-  /// Serializes this GoogleCloudRunLogEntry to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String? get trace;
+  Map<String, String>? get labels;
+  String? get error;
+  String? get stackTrace;
 
   /// Create a copy of GoogleCloudRunLogEntry
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GoogleCloudRunLogEntryCopyWith<GoogleCloudRunLogEntry> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GoogleCloudRunLogEntryCopyWith<$Res> {
-  factory $GoogleCloudRunLogEntryCopyWith(GoogleCloudRunLogEntry value,
-          $Res Function(GoogleCloudRunLogEntry) then) =
-      _$GoogleCloudRunLogEntryCopyWithImpl<$Res, GoogleCloudRunLogEntry>;
-  @useResult
-  $Res call(
-      {Severity severity,
-      String message,
-      @JsonKey(name: 'logging.googleapis.com/trace') String? trace,
-      Map<String, String>? labels,
-      String? error,
-      String? stackTrace});
-}
-
-/// @nodoc
-class _$GoogleCloudRunLogEntryCopyWithImpl<$Res,
-        $Val extends GoogleCloudRunLogEntry>
-    implements $GoogleCloudRunLogEntryCopyWith<$Res> {
-  _$GoogleCloudRunLogEntryCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of GoogleCloudRunLogEntry
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $GoogleCloudRunLogEntryCopyWith<GoogleCloudRunLogEntry> get copyWith =>
+      _$GoogleCloudRunLogEntryCopyWithImpl<GoogleCloudRunLogEntry>(
+          this as GoogleCloudRunLogEntry, _$identity);
+
+  /// Serializes this GoogleCloudRunLogEntry to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? severity = null,
-    Object? message = null,
-    Object? trace = freezed,
-    Object? labels = freezed,
-    Object? error = freezed,
-    Object? stackTrace = freezed,
-  }) {
-    return _then(_value.copyWith(
-      severity: null == severity
-          ? _value.severity
-          : severity // ignore: cast_nullable_to_non_nullable
-              as Severity,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      trace: freezed == trace
-          ? _value.trace
-          : trace // ignore: cast_nullable_to_non_nullable
-              as String?,
-      labels: freezed == labels
-          ? _value.labels
-          : labels // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-      stackTrace: freezed == stackTrace
-          ? _value.stackTrace
-          : stackTrace // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GoogleCloudRunLogEntry &&
+            (identical(other.severity, severity) ||
+                other.severity == severity) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.trace, trace) || other.trace == trace) &&
+            const DeepCollectionEquality().equals(other.labels, labels) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.stackTrace, stackTrace) ||
+                other.stackTrace == stackTrace));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, severity, message, trace,
+      const DeepCollectionEquality().hash(labels), error, stackTrace);
+
+  @override
+  String toString() {
+    return 'GoogleCloudRunLogEntry(severity: $severity, message: $message, trace: $trace, labels: $labels, error: $error, stackTrace: $stackTrace)';
   }
 }
 
 /// @nodoc
-abstract class _$$CloudLogImplCopyWith<$Res>
-    implements $GoogleCloudRunLogEntryCopyWith<$Res> {
-  factory _$$CloudLogImplCopyWith(
-          _$CloudLogImpl value, $Res Function(_$CloudLogImpl) then) =
-      __$$CloudLogImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $GoogleCloudRunLogEntryCopyWith<$Res> {
+  factory $GoogleCloudRunLogEntryCopyWith(GoogleCloudRunLogEntry value,
+          $Res Function(GoogleCloudRunLogEntry) _then) =
+      _$GoogleCloudRunLogEntryCopyWithImpl;
   @useResult
   $Res call(
       {Severity severity,
@@ -124,12 +80,12 @@ abstract class _$$CloudLogImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CloudLogImplCopyWithImpl<$Res>
-    extends _$GoogleCloudRunLogEntryCopyWithImpl<$Res, _$CloudLogImpl>
-    implements _$$CloudLogImplCopyWith<$Res> {
-  __$$CloudLogImplCopyWithImpl(
-      _$CloudLogImpl _value, $Res Function(_$CloudLogImpl) _then)
-      : super(_value, _then);
+class _$GoogleCloudRunLogEntryCopyWithImpl<$Res>
+    implements $GoogleCloudRunLogEntryCopyWith<$Res> {
+  _$GoogleCloudRunLogEntryCopyWithImpl(this._self, this._then);
+
+  final GoogleCloudRunLogEntry _self;
+  final $Res Function(GoogleCloudRunLogEntry) _then;
 
   /// Create a copy of GoogleCloudRunLogEntry
   /// with the given fields replaced by the non-null parameter values.
@@ -143,29 +99,29 @@ class __$$CloudLogImplCopyWithImpl<$Res>
     Object? error = freezed,
     Object? stackTrace = freezed,
   }) {
-    return _then(_$CloudLogImpl(
+    return _then(_self.copyWith(
       severity: null == severity
-          ? _value.severity
+          ? _self.severity
           : severity // ignore: cast_nullable_to_non_nullable
               as Severity,
       message: null == message
-          ? _value.message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
       trace: freezed == trace
-          ? _value.trace
+          ? _self.trace
           : trace // ignore: cast_nullable_to_non_nullable
               as String?,
       labels: freezed == labels
-          ? _value._labels
+          ? _self.labels
           : labels // ignore: cast_nullable_to_non_nullable
               as Map<String, String>?,
       error: freezed == error
-          ? _value.error
+          ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
       stackTrace: freezed == stackTrace
-          ? _value.stackTrace
+          ? _self.stackTrace
           : stackTrace // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
@@ -174,8 +130,8 @@ class __$$CloudLogImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CloudLogImpl extends _CloudLog {
-  const _$CloudLogImpl(
+class _CloudLog extends GoogleCloudRunLogEntry {
+  const _CloudLog(
       {required this.severity,
       required this.message,
       @JsonKey(name: 'logging.googleapis.com/trace') this.trace,
@@ -184,9 +140,8 @@ class _$CloudLogImpl extends _CloudLog {
       this.stackTrace})
       : _labels = labels,
         super._();
-
-  factory _$CloudLogImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CloudLogImplFromJson(json);
+  factory _CloudLog.fromJson(Map<String, dynamic> json) =>
+      _$CloudLogFromJson(json);
 
   @override
   final Severity severity;
@@ -210,16 +165,26 @@ class _$CloudLogImpl extends _CloudLog {
   @override
   final String? stackTrace;
 
+  /// Create a copy of GoogleCloudRunLogEntry
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'GoogleCloudRunLogEntry(severity: $severity, message: $message, trace: $trace, labels: $labels, error: $error, stackTrace: $stackTrace)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$CloudLogCopyWith<_CloudLog> get copyWith =>
+      __$CloudLogCopyWithImpl<_CloudLog>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$CloudLogToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CloudLogImpl &&
+            other is _CloudLog &&
             (identical(other.severity, severity) ||
                 other.severity == severity) &&
             (identical(other.message, message) || other.message == message) &&
@@ -235,53 +200,74 @@ class _$CloudLogImpl extends _CloudLog {
   int get hashCode => Object.hash(runtimeType, severity, message, trace,
       const DeepCollectionEquality().hash(_labels), error, stackTrace);
 
-  /// Create a copy of GoogleCloudRunLogEntry
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$CloudLogImplCopyWith<_$CloudLogImpl> get copyWith =>
-      __$$CloudLogImplCopyWithImpl<_$CloudLogImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CloudLogImplToJson(
-      this,
-    );
+  String toString() {
+    return 'GoogleCloudRunLogEntry(severity: $severity, message: $message, trace: $trace, labels: $labels, error: $error, stackTrace: $stackTrace)';
   }
 }
 
-abstract class _CloudLog extends GoogleCloudRunLogEntry {
-  const factory _CloudLog(
-      {required final Severity severity,
-      required final String message,
-      @JsonKey(name: 'logging.googleapis.com/trace') final String? trace,
-      final Map<String, String>? labels,
-      final String? error,
-      final String? stackTrace}) = _$CloudLogImpl;
-  const _CloudLog._() : super._();
+/// @nodoc
+abstract mixin class _$CloudLogCopyWith<$Res>
+    implements $GoogleCloudRunLogEntryCopyWith<$Res> {
+  factory _$CloudLogCopyWith(_CloudLog value, $Res Function(_CloudLog) _then) =
+      __$CloudLogCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {Severity severity,
+      String message,
+      @JsonKey(name: 'logging.googleapis.com/trace') String? trace,
+      Map<String, String>? labels,
+      String? error,
+      String? stackTrace});
+}
 
-  factory _CloudLog.fromJson(Map<String, dynamic> json) =
-      _$CloudLogImpl.fromJson;
+/// @nodoc
+class __$CloudLogCopyWithImpl<$Res> implements _$CloudLogCopyWith<$Res> {
+  __$CloudLogCopyWithImpl(this._self, this._then);
 
-  @override
-  Severity get severity;
-  @override
-  String get message;
-  @override
-  @JsonKey(name: 'logging.googleapis.com/trace')
-  String? get trace;
-  @override
-  Map<String, String>? get labels;
-  @override
-  String? get error;
-  @override
-  String? get stackTrace;
+  final _CloudLog _self;
+  final $Res Function(_CloudLog) _then;
 
   /// Create a copy of GoogleCloudRunLogEntry
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CloudLogImplCopyWith<_$CloudLogImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? severity = null,
+    Object? message = null,
+    Object? trace = freezed,
+    Object? labels = freezed,
+    Object? error = freezed,
+    Object? stackTrace = freezed,
+  }) {
+    return _then(_CloudLog(
+      severity: null == severity
+          ? _self.severity
+          : severity // ignore: cast_nullable_to_non_nullable
+              as Severity,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      trace: freezed == trace
+          ? _self.trace
+          : trace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      labels: freezed == labels
+          ? _self._labels
+          : labels // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stackTrace: freezed == stackTrace
+          ? _self.stackTrace
+          : stackTrace // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
+
+// dart format on

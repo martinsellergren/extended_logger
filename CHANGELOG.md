@@ -1,3 +1,7 @@
+## 0.2.4
+
+- Migrate to freezed 3.
+
 ## 0.2.3
 
 - Tweak package description and readme.

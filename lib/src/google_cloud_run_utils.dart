@@ -13,7 +13,7 @@ void writeAStructuredContainerLogFromGoogleCloudRunServer(
 }
 
 @freezed
-class GoogleCloudRunLogEntry with _$GoogleCloudRunLogEntry {
+abstract class GoogleCloudRunLogEntry with _$GoogleCloudRunLogEntry {
   const GoogleCloudRunLogEntry._();
 
   const factory GoogleCloudRunLogEntry({
