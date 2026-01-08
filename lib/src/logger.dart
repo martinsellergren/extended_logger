@@ -30,7 +30,8 @@ class ExtendedLogger {
       {Object? error, StackTrace? stackTrace}) {
     final currentTrace = Trace.current();
     final currentLine = currentTrace.logLine();
-    stackTrace ??= currentTrace;
+    stackTrace ??=
+        level.index <= LogLevel.verbose.index ? StackTrace.empty : currentTrace;
     stackTrace = stackTrace == StackTrace.empty
         ? StackTrace.empty
         : skipLoggerLines

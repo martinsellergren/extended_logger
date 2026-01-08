@@ -1,3 +1,7 @@
+## 0.2.5
+
+- No stacktraces for verbose logs, unless explicitly provided.
+
 ## 0.2.4
 
 - Migrate to freezed 3.
