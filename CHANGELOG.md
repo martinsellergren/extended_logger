@@ -1,3 +1,7 @@
+## 0.2.6
+
+- Bump talker_flutter
+
 ## 0.2.5
 
 - No stacktraces for verbose logs, unless explicitly provided.
