@@ -19,12 +19,21 @@ class ExtendedLogger {
   /// Skip initial logger.dart-entries in stacktraces.
   final bool skipLoggerLines;
 
+  /// Maximum number of stack trace frames to include.
+  final int maxStackTraceFrames;
+
+  /// Use raw stack traces without any filtration.
+  final bool useRawStackTraces;
+
   AdditionalLogConfig? additionalConfig;
 
-  ExtendedLogger(
-      {required this.logLocally,
-      this.skipLoggerLines = true,
-      AdditionalLogConfig? additionalConfig});
+  ExtendedLogger({
+    required this.logLocally,
+    this.skipLoggerLines = true,
+    this.maxStackTraceFrames = 50,
+    this.useRawStackTraces = false,
+    AdditionalLogConfig? additionalConfig,
+  });
 
   void log(LogLevel level, String message,
       {Object? error, StackTrace? stackTrace}) {
@@ -32,11 +41,19 @@ class ExtendedLogger {
     final currentLine = currentTrace.logLine();
     stackTrace ??=
         level.index <= LogLevel.verbose.index ? StackTrace.empty : currentTrace;
-    stackTrace = stackTrace == StackTrace.empty
-        ? StackTrace.empty
-        : skipLoggerLines
-            ? Trace.from(stackTrace).terse.skipLoggerLines()
-            : Trace.from(stackTrace).terse;
+    if (stackTrace != StackTrace.empty) {
+      var trace = Trace.from(stackTrace);
+      if (!useRawStackTraces) {
+        trace = trace.terseFixed(maxStackTraceFrames);
+      }
+      if (skipLoggerLines) {
+        trace = trace.skipLoggerLines();
+      }
+      if (useRawStackTraces) {
+        trace = Trace(trace.frames.take(maxStackTraceFrames));
+      }
+      stackTrace = trace;
+    }
     final metadata = additionalConfig?.getMetadata?.call();
     message = [
       if (currentLine != null) 'at $currentLine',
@@ -107,5 +124,25 @@ extension on Trace {
     final i =
         frames.lastIndexWhere((e) => e.toString().contains('logger.dart'));
     return Trace(frames.skip(i + 1));
+  }
+
+  // stack_trace's terse is limited and often fails all together on flutter web
+  Trace terseFixed(int maxFrames) {
+    final folded = foldFrames((frame) {
+      if (frame.isCore) return true;
+      final lib = frame.library;
+      if (frame.package == 'flutter') return true;
+      if (frame.package == 'provider') return true;
+      if (frame.package == 'nested') return true;
+      if (lib.contains('dart-sdk/lib/')) return true;
+      if (lib.startsWith('lib/_engine/')) return true;
+      if (lib.startsWith('package:flutter/')) return true;
+      if (lib.startsWith('package:nested/')) return true;
+      if (lib.startsWith('package:logger/')) return true;
+      if (lib.startsWith('package:talker/')) return true;
+      if (lib.startsWith('package:talker_flutter/')) return true;
+      return false;
+    }, terse: true);
+    return Trace(folded.frames.take(maxFrames));
   }
 }

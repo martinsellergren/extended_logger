@@ -1,3 +1,8 @@
+## 0.2.7
+
+- Improved stack trace cleanup, especially on web
+- Added params maxStackTraceFrames and useRawStackTraces
+
 ## 0.2.6
 
 - Bump talker_flutter
