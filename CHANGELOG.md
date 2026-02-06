@@ -1,3 +1,7 @@
+## 0.2.8
+
+- Improve formatting
+
 ## 0.2.7
 
 - Improved stack trace cleanup, especially on web

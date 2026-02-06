@@ -59,6 +59,7 @@ class ExtendedLogger {
       if (currentLine != null) 'at $currentLine',
       '${level.name.toUpperCase()}, ${DateTime.now()}',
       ...metadata?.entries.map((e) => '${e.key}: ${e.value}') ?? <String>[],
+      '---',
       message.toString(),
     ].join('\n');
     if (additionalConfig?.shouldLogLocally?.call(level) ?? true) {
