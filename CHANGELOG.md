@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Restructure LogRemotely callback
+
 ## 0.2.8
 
 - Improve formatting

@@ -66,15 +66,35 @@ class ExtendedLogger {
       logLocally(level, message, error, stackTrace);
     }
     if (additionalConfig?.shouldLogRemotely?.call(level) ?? false) {
-      _logRemotely(level, message, error, stackTrace);
+      _logRemotely(
+        level: level,
+        message: message,
+        labels: metadata,
+        currentLine: currentLine,
+        error: error,
+        stackTrace: stackTrace,
+      );
     }
   }
 
-  Future<void> _logRemotely(LogLevel level, String message, Object? error,
-      StackTrace stackTrace) async {
+  Future<void> _logRemotely({
+    required LogLevel level,
+    required String message,
+    required Map<String, String>? labels,
+    required String? currentLine,
+    required Object? error,
+    required StackTrace stackTrace,
+  }) async {
     try {
-      await additionalConfig?.logRemotely
-          ?.call(level, message, error, stackTrace);
+      await additionalConfig?.logRemotely?.call(
+          level,
+          message,
+          labels,
+          error,
+          [
+            if (currentLine != null) 'at $currentLine',
+            stackTrace.toString(),
+          ].join('\n'));
     } catch (e, s) {
       logLocally(LogLevel.warning, 'Failed to log remotely', e, s);
     }

@@ -5,8 +5,9 @@ import 'log_level.dart';
 typedef LogRemotely = FutureOr<void> Function(
   LogLevel level,
   String message,
+  Map<String, String>? labels,
   Object? error,
-  StackTrace? stackTrace,
+  String? stackTrace,
 );
 
 class AdditionalLogConfig {

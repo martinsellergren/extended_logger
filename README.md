@@ -1,4 +1,4 @@
-A logger api with some convenience stuff for better logging.
+A logger api with some convenient stuff for better logging.
 
 - Include current log line in every log (i.e the line of the log call).
 - Clean up stack traces, such as skip `logger.dart` entries.
