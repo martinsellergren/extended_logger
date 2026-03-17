@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Don't include labels in message, in remote logs
+
 ## 0.3.0
 
 - Restructure LogRemotely callback

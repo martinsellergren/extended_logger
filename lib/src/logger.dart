@@ -55,15 +55,18 @@ class ExtendedLogger {
       stackTrace = trace;
     }
     final metadata = additionalConfig?.getMetadata?.call();
-    message = [
-      if (currentLine != null) 'at $currentLine',
-      '${level.name.toUpperCase()}, ${DateTime.now()}',
-      ...metadata?.entries.map((e) => '${e.key}: ${e.value}') ?? <String>[],
-      '---',
-      message.toString(),
-    ].join('\n');
     if (additionalConfig?.shouldLogLocally?.call(level) ?? true) {
-      logLocally(level, message, error, stackTrace);
+      logLocally(
+        level,
+        _formatLocalLogMessage(
+          currentLine: currentLine,
+          level: level,
+          metadata: metadata,
+          message: message,
+        ),
+        error,
+        stackTrace,
+      );
     }
     if (additionalConfig?.shouldLogRemotely?.call(level) ?? false) {
       _logRemotely(
@@ -75,6 +78,21 @@ class ExtendedLogger {
         stackTrace: stackTrace,
       );
     }
+  }
+
+  String _formatLocalLogMessage({
+    required String? currentLine,
+    required LogLevel level,
+    required Map<String, String>? metadata,
+    required String message,
+  }) {
+    return [
+      if (currentLine != null) 'at $currentLine',
+      '${level.name.toUpperCase()}, ${DateTime.now()}',
+      ...metadata?.entries.map((e) => '${e.key}: ${e.value}') ?? <String>[],
+      '---',
+      message.toString(),
+    ].join('\n');
   }
 
   Future<void> _logRemotely({
