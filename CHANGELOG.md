@@ -1,3 +1,7 @@
+## 0.3.2
+
+- Added param: dedupeErrorLogs
+
 ## 0.3.1
 
 - Don't include labels in message, in remote logs

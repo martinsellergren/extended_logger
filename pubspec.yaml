@@ -1,6 +1,6 @@
 name: extended_logger
 description: A logger api with some convenient stuff for better logging.
-version: 0.3.1
+version: 0.3.2
 repository: https://github.com/martinsellergren/extended_logger
 
 environment:
@@ -10,6 +10,7 @@ dependencies:
   freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
   logger: ^2.0.0
+  rxdart: ^0.28.0
   stack_trace: ^1.0.0
   talker: ^5.0.0
 

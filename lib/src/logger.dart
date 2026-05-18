@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:logger/logger.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'config.dart';
@@ -13,7 +16,23 @@ typedef LogLocally = Function(
   StackTrace? stackTrace,
 );
 
+typedef _LogEntry = ({
+  LogLevel level,
+  String message,
+  Object? error,
+  StackTrace? stackTrace,
+});
+
 class ExtendedLogger {
+  late final _deduper = StreamController<_LogEntry>()
+    ..stream
+        .distinctUnique(
+          equals: (e1, e2) => e1.key == e2.key,
+          hashCode: (e) => e.key.hashCode,
+        )
+        .listen((e) =>
+            _log(e.level, e.message, error: e.error, stackTrace: e.stackTrace));
+
   final LogLocally logLocally;
 
   /// Skip initial logger.dart-entries in stacktraces.
@@ -25,6 +44,8 @@ class ExtendedLogger {
   /// Use raw stack traces without any filtration.
   final bool useRawStackTraces;
 
+  final bool dedupeErrorLogs;
+
   AdditionalLogConfig? additionalConfig;
 
   ExtendedLogger({
@@ -32,10 +53,22 @@ class ExtendedLogger {
     this.skipLoggerLines = true,
     this.maxStackTraceFrames = 50,
     this.useRawStackTraces = false,
+    this.dedupeErrorLogs = false,
     AdditionalLogConfig? additionalConfig,
   });
 
   void log(LogLevel level, String message,
+          {Object? error, StackTrace? stackTrace}) =>
+      dedupeErrorLogs && level == LogLevel.error
+          ? _deduper.add((
+              level: level,
+              message: message,
+              error: error,
+              stackTrace: stackTrace
+            ))
+          : _log(level, message, error: error, stackTrace: stackTrace);
+
+  void _log(LogLevel level, String message,
       {Object? error, StackTrace? stackTrace}) {
     final currentTrace = Trace.current();
     final currentLine = currentTrace.logLine();
@@ -184,4 +217,15 @@ extension on Trace {
     }, terse: true);
     return Trace(folded.frames.take(maxFrames));
   }
+}
+
+extension on _LogEntry {
+  String get key => [
+        level,
+        message,
+        error,
+        stackTrace
+            .toString()
+            .substring(0, math.min(100, stackTrace.toString().length)),
+      ].join('|');
 }
